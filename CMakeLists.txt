@@ -106,10 +106,17 @@ endif()
 #     set(LLAMA_EXTRA_FLAGS ${LLAMA_EXTRA_FLAGS} -DGGML_PERF)
 # endif()
 
-add_executable(llama
+set(LLAMA_SRC
     main.cpp
     utils.cpp
-    llama.cpp
+    llama.cpp)
+
+if(NOT WIN32)
+    set(LLAMA_SRC ${LLAMA_SRC} tcp_server.cpp)
+endif()
+
+add_executable(llama
+    ${LLAMA_SRC}
     utils.h)
 
 add_executable(quantize
